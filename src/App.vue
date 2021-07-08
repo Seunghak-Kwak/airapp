@@ -1,28 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+      <div>
+      <alert v-if="getError['show']" :message="getError['message']" :color="getError['color']" />
+      <router-view />
+      </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapActions, mapGetters } from 'vuex'
+import Alert from './components/Alert.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  components: { Alert },
+  name: "App",
+  computed : mapGetters(['getAccount', 'getError']),
+  watch: {
+    getAccount(newValue) {
+      console.log("In Watch getAccount in App.vue")
+      if (newValue === null) {
+        this.$router.replace('/')
+      } else {
+        this.$router.replace('/main')
+      }
+    }
+  },
+  methods: mapActions(['fetchAccount']),
+  created() {
+    if(!this.getAccount)
+      this.fetchAccount()
   }
 }
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+</script>
