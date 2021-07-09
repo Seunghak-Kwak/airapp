@@ -3,8 +3,8 @@ import { Server } from "../../utils/config";
 
 const state = {
   notices: [],
-  user: null,
-  users: [],
+  // user: null,
+  // users: [],
 };
 
 const actions = {
@@ -90,35 +90,35 @@ const actions = {
       );
     }
   },
-  async getUser({commit}, userId) {
-    try {
-      const response = await api.getUser(userId);
-      commit("getUser", response.name);
-      commit("getUsers", response.name);
-    } catch (e) {
-      console.log("Could not get User", e);
-      commit(
-        "setError",
-        {
-          show: true,
-          message: "Failed to get User",
-          color: "red",
-        },
-        { root: true }
-      );
-    }
-  }
+  // async getUser({commit}, userId) {
+  //   try {
+  //     const response = await api.getUser(userId);
+  //     commit("getUser", response.name);
+  //     commit("getUsers", response.name);
+  //   } catch (e) {
+  //     console.log("Could not get User", e);
+  //     commit(
+  //       "setError",
+  //       {
+  //         show: true,
+  //         message: "Failed to get User",
+  //         color: "red",
+  //       },
+  //       { root: true }
+  //     );
+  //   }
+  // }
 };
 
 const getters = {
   notices: (state) => state.notices,
-  users: (state) => state.users,
-  user: (state) => state.user,
+  // users: (state) => state.users,
+  // user: (state) => state.user,
 };
 
 const mutations = {
-  getUser: (state, user) => (state.user = user),
-  getUsers: (state, user) => (state.users.push(user)),
+  // getUser: (state, user) => (state.user = user),
+  // getUsers: (state, user) => (state.users.push(user)),
   setNotice: (state, notices) => (state.notices = notices),
   addNotice: (state, notice) => state.notices.unshift(notice),
   deleteNotice: (state, id) =>

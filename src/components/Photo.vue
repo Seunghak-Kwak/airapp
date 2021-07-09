@@ -12,16 +12,17 @@
       class="ma-3" 
       > 사진올리기 </v-btn> 
     </v-container>
+    
     <v-row>
       <v-col
-        v-for="n in 9"
+        v-for="n in img"
         :key="n"
         class="d-flex child-flex"
         cols="4"
       >
         <v-img
-          :src="`https://picsum.photos/400/300?image=${n * 5 + 10}`"
-          :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+          :src=n
+          :lazy-src=n
           aspect-ratio="1"
           class="grey lighten-2"
         >
@@ -46,16 +47,44 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import Header from './Header.vue'
 import Footer from './Footer.vue'
 
 export default {
+  data: () => ({
+    init:false
+  }),
   components: {
     Header,
-    Footer
-  }
-}
+    Footer,
+  },
+  name: "Photo",
+  computed: mapGetters(["getAccount", "img", "files","getFirst"]),
+  methods: {
+    ...mapActions(["logout","fetchAccount","listFiles","getFile","setFirst","initialList"]),
+    handleLogout() {
+      this.logout();
+    },
+  },
+  created() {
+    const userId = this.getAccount["$id"];
+    if (!userId) {
+      console.log("User id is null/empty");
+    } else {
+      if (this.getFirst == false) {
+      this.listFiles();
+      this.initialList();
+      if (this.files.files.length > 0) {
+        for(let i = 0; i < this.files.files.length; i++ ) {
+          this.getFile(this.files.files[i].$id);
+        }
+      }
+      this.setFirst(true);
+      }
+    }
+  }  
+};
 </script>
-
 <style>
 </style>

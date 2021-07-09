@@ -11,6 +11,9 @@
 
 <v-app>
   <Header />
+  <div style="margin:30px;padding:30px">
+      {{files}}
+  </div>
   <Footer />
 </v-app>
 
@@ -25,45 +28,27 @@ export default {
     Header,
     Footer
     },
-    computed: mapGetters(["file", "files" ,"getAccount"]),
+    computed: mapGetters(["files" ,"getAccount", "getFirst"]),
     methods: {
-    ...mapActions(["upload", "listFiles"]),
-    handleUpload(e) {
-      const file = e.target.files[0];
-      console.log(file);
-      e.preventDefault();
-      const userId = this.getAccount["$id"];
-      if (!userId) {
-        console.log("User id is null/empty");
-      } else {
-        const read = ["role:member"];
-        const write = [`user:${userId}`];
-        this.upload({
-            file,
-            read,
-            write
-        });
-      }
+      ...mapActions(["listFiles","getFile","setFirst","initialList"]),
     },
-    handleFiles(e) {
-      e.preventDefault();
-      const userId = this.getAccount["$id"];
-      if (!userId) {
-        console.log("User id is null/empty");
-      } else {
-        const files = this.listFiles();
-        console.log(files);
-      }
-    },    
-    },
-    data() {
-        return {
-            imgList : []
-        };
-    },
-    created() {
-        this.imgList = this.listFiles();
-    }
+    // created() {
+    //   const userId = this.getAccount["$id"];
+    //   if (!userId) {
+    //     console.log("User id is null/empty");
+    //   } else {
+    //     if (this.getFirst == false) {
+    //     this.listFiles();
+    //     this.initialList();
+    //     if (this.files.files.length > 0) {
+    //       for(let i = 0; i < this.files.files.length; i++ ) {
+    //         this.getFile(this.files.files[i].$id);
+    //       }
+    //     }
+    //     this.setFirst(true);
+    //     }
+    //   }
+    // }
 }
 
 </script>

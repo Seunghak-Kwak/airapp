@@ -14,38 +14,34 @@ let api = {
     return appwrite;
   },
 
-  provider2: () => {
-    const sdk = require('node-appwrite');
-    let client = new sdk.Client();
-    let users = new sdk.Users(client);
-    client
-        .setEndpoint(Server.endpoint) // Your API Endpoint
-        .setProject(Server.project) // Your project ID
-        .setKey(Server.apikey) // Your secret API key
-    ;
-    // let promise = users.get('60e2add43d809');
+  // provider2: () => {
+  //   const sdk = require('node-appwrite');
+  //   let client = new sdk.Client();
+  //   let users = new sdk.Users(client);
+  //   client
+  //       .setEndpoint(Server.endpoint) // Your API Endpoint
+  //       .setProject(Server.project) // Your project ID
+  //       .setKey(Server.apikey) // Your secret API key
+  //   ;
+  //   return users;
+  // },
 
-    // promise.then(function (response) {
-    //     console.log(response);
+  listFiles: () => {
+    return api.provider().storage.listFiles();
+    //.then(function (response) {
+    //     console.log(response); 
     // }, function (error) {
     //     console.log(error);
     // });
-    // let appwrite = new Appwrite();
-    // appwrite.setEndpoint(Server.endpoint).setProject(Server.project).setKey(Server.apikey);
-    // api.sdk = appwrite;
-    return users;
-  },
-
-  listFiles: () => {
-    return api.provider().storage.listFiles().then(function (response) {
-        console.log(response); 
-    }, function (error) {
-        console.log(error);
-    });
   },
 
   createFile: (file, read, write) => {
     return api.provider().storage.createFile(file, read, write);
+  },
+
+  getFile: (fileId) => {
+    return api.provider().storage.getFileView(fileId);
+    // return api.provider().storage.getFileView([fileId], 800, 0, 100, 5, 'ff0000', 50, 0.8, 45, 'ff0000', 'png');
   },
 
   createAccount: (email, password, name) => {
@@ -64,9 +60,9 @@ let api = {
     return api.provider().account.deleteSession('current');
   },
 
-  getUser: (userId) => {
-    return api.provider2().get(userId);
-  },
+  // getUser: (userId) => {
+  //   return api.provider2().get(userId);
+  // },
 
   createDocument: (collectionId, data, read, write) => {
     return api

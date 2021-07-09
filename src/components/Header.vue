@@ -6,7 +6,7 @@
     <v-app-bar-title>
       <img 
       width="120px" 
-      @click="$router.push('/main')" 
+      @click="$router.push('/main').catch(()=>{});" 
       class="w-8 h-8 inline" 
       src="../assets/bskt-logo.png" />
     </v-app-bar-title>
@@ -14,14 +14,14 @@
     <v-spacer></v-spacer>
 
     <v-btn
-    @click="$router.push('/noticelist')"
+    @click="$router.push('/noticelist').catch(()=>{});"
     class="mr-3" 
     text> 
     모임공지 
     </v-btn>
 
     <v-btn
-    @click="$router.push('/photo')"
+    @click="$router.push('/photo').catch(()=>{});"
     class="mr-3" 
     text>
     사진첩

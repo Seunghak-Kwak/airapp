@@ -24,7 +24,7 @@
             <span>Attach</span>
         </div>
         <v-file-input
-        v-model="myfile"
+        v-model="files"
         color="deep-purple accent-4"
         counter
         label="File input"
@@ -53,7 +53,7 @@
             v-else-if="index === 2"
             class="text-overline grey--text text--darken-3 mx-2"
             >
-            +{{ myfiles.length - 2 }} File(s)
+            +{{ files.length - 2 }} File(s)
             </span>
         </template>
         </v-file-input>
@@ -71,7 +71,6 @@ import Footer from './Footer.vue'
 export default {
   data: () => ({
     subject: '',
-    imgList : [],
     value1: 'Please enter the subject.',
   }),
   components: {
@@ -79,43 +78,32 @@ export default {
     Footer,
   },
   name: "Uploader",
-  computed: mapGetters(["notices", "getAccount", "users", "file"]),
+  computed: mapGetters(["notices", "getAccount", "file", "img","getFirst"]),
   methods: {
-    ...mapActions(["logout","fetchNotices","addNotice","fetchAccount","upload", "listFiles"]),
+    ...mapActions(["logout","fetchNotices","addNotice","fetchAccount","upload","setFirst"]),
     handleLogout() {
       this.logout();
     },
     handleUpload(e) {
       const file = document.getElementById("myfile").files[0];
-      console.log(file);
       e.preventDefault();
       const userId = this.getAccount["$id"];
       if (!userId) {
         console.log("User id is null/empty");
       } else {
-        const read = ["role:member"];
-        const write = [`user:${userId}`];
+        // const read = ["role:member"];
+        // const write = [`user:${userId}`];
+        const read = ["*"];
+        const write = ["*"];
         this.upload({
             file,
             read,
             write
         });
+        this.setFirst(false);
+        this.$router.push('./photo');
       }
     },
-    handleFiles(e) {
-      e.preventDefault();
-      const userId = this.getAccount["$id"];
-      if (!userId) {
-        console.log("User id is null/empty");
-      } else {
-        const files = this.listFiles();
-        console.log(files);
-      }
-    },    
-  },
-  created() {
-    if (!this.getAccount) this.fetchAccount();
-    this.imgList = this.listFiles();
   },
 };
 </script>

@@ -1,9 +1,10 @@
 import api from "../../api";
-// import { Server } from "../../utils/config";
+//import { Server } from "../../utils/config";
 
 const state = {
     file : null,
-    files : []
+    files : [],
+    img : [],
 };
 
 const actions = {
@@ -12,7 +13,6 @@ const actions = {
       const response = await api.createFile(
           file, read, write
       );
-      console.log(response);
       commit("uploadImg", response);
     } catch (e) {
       console.log("Could not create file", e);
@@ -32,19 +32,38 @@ const actions = {
       const response = await api.listFiles();
       commit("listFiles", response);
     } catch (e) {
-      console.log("Error getting List Files");
+      console.log("Error getting List Files", e);
     }
   },
+  getFile: async ({commit}, fileId) => {
+    try {
+      const response = await api.getFile(fileId);
+      // console.log(response);
+      commit("getFile", response.href);
+    } catch (e) {
+      console.log("Error getting File", e);
+    }
+  },
+  initialList: async ({commit}) => {
+    try {
+      commit("initialList", []);
+    } catch (e) {
+      console.log("Error initialList", e);
+    }
+  }
 };
 
 const getters = {
     file: (state) => state.file,
-    files: (state) => state.files
+    files: (state) => state.files,
+    img: (state) => state.img
 };
 
 const mutations = {
     uploadImg: (state, file) => (state.file = file),
-    listFiles: (state, files) => (state.files = files)
+    listFiles: (state, files) => (state.files = files),
+    getFile: (state, img) => (state.img.push(img)),
+    initialList: (state, data) => (state.img = data),
 };
 
 export default {

@@ -11,11 +11,6 @@
       class="ma-3" 
       > 글쓰기 </v-btn> 
     </v-container>
-<!-- 
-      <ul>
-        <notice-item v-for="item in notices" :key="item['$id']" :notice="item" />
-      </ul> -->
-
 
   <v-simple-table
     fixed-header
@@ -40,16 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        <notice-item />
-        <tr notice-item
-          v-for="item in notices"
-          :key="item['$id']"
-        >
-          <td><v-btn>View</v-btn></td>
-          <td>{{ item.subject }}</td>
-          <td>{{ item.contents }}</td>
-          <td>{{ item.username }}</td>
-        </tr>
+        <notice-item v-for="item in notices" :key="item['$id']" :notice="item" />
       </tbody>
     </template>
   </v-simple-table>

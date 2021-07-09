@@ -9,19 +9,29 @@ Vue.use(Vuex);
 
 /** Global store */
 const state = {
-    error : {}
+    error : {},
+    access : false
 }
 
 const getters = {
-    getError: (state) => state.error
+    getError: (state) => state.error,
+    getFirst: (state) => state.access
 }
 
 const actions = {
-
+    setFirst: async ({ commit }, check) => {
+        try {
+          commit("setFirst", check);
+          console.log(state.access);
+        } catch (e) {
+          console.log("Error Set First", e);
+        }
+      },
 }
 
 const mutations = {
-    setError: (state, error) => state.error = error
+    setError: (state, error) => state.error = error,
+    setFirst: (state, access) => state.access = access
 }
 
 const store = new Vuex.Store({
