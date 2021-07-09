@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import notice from './modules/notice';
 import account from './modules/account';
 import storage from './modules/storage';
-
+//test
 
 Vue.use(Vuex);
 
